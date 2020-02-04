@@ -12,7 +12,6 @@ public class WalkingScore extends Location implements Serializable
     public WalkingScore() {
 
     }
-    int a;
 
     // constructor
     public WalkingScore(double walkingScore)
