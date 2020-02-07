@@ -91,9 +91,15 @@ public class Address {
 
             String inputLine;
 
+            //왜 while썻어요?
+
             while ((inputLine = br.readLine()) != null) {
                 response.append(inputLine);
+                Log.d("Address_while",response.toString());
             }
+            /*response.append(br.readLine());
+            Log.d("Address_while",response.toString());*/
+
 
 
             br.close();
@@ -114,7 +120,7 @@ public class Address {
             {
                 e.printStackTrace();
             }
-
+        Log.d("Address",response.toString());
         return response.toString();
     }
 

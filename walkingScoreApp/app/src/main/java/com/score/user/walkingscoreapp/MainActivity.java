@@ -10,12 +10,11 @@ package com.score.user.walkingscoreapp;
         import android.os.Bundle;
         import android.os.Environment;
         import android.os.SystemClock;
-        import android.preference.PreferenceManager;
-        import android.support.v4.app.ActivityCompat;
-        import android.support.v4.app.FragmentManager;
-        import android.support.v4.content.ContextCompat;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.VectorEnabledTintResources;
+
+        import androidx.core.app.ActivityCompat;
+        import androidx.core.content.ContextCompat;
+        import androidx.appcompat.app.AppCompatActivity;
+        import androidx.appcompat.widget.VectorEnabledTintResources;
         import android.util.Log;
         import android.view.View;
         import android.view.WindowManager;
@@ -23,30 +22,23 @@ package com.score.user.walkingscoreapp;
         import android.widget.ArrayAdapter;
         import android.widget.Button;
         import android.widget.EditText;
-        import android.widget.LinearLayout;
         import android.widget.Spinner;
         import android.widget.TextView;
         import android.widget.Toast;
 
-        import org.w3c.dom.Text;
-
         import java.io.BufferedReader;
         import java.io.BufferedWriter;
-        import java.io.ByteArrayOutputStream;
         import java.io.File;
         import java.io.FileReader;
         import java.io.FileWriter;
         import java.io.IOException;
-        import java.io.InputStream;
         import java.io.InputStreamReader;
-        import java.io.OutputStreamWriter;
         import java.util.Iterator;
         import java.util.StringTokenizer;
         import java.util.Vector;
 
         import com.naver.maps.geometry.LatLng;
         import com.naver.maps.geometry.Utmk;
-        import com.naver.maps.map.MapFragment;
 
 public class MainActivity extends AppCompatActivity {
     public final int REQUEST_CODE = 101;
@@ -77,20 +69,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE); // 키보드 올라오면 화면 크기 재조정
 
-        // 파일 외부저장소를 읽는 권할을 부여하는 코드
-        /*ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "권한 있음", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(this,"권한 없음",Toast.LENGTH_LONG).show();
-            if(ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,Manifest.permission.READ_EXTERNAL_STORAGE)){
-                Toast.makeText(this,"권한 설명 필요",Toast.LENGTH_LONG).show();
-            }else{
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
-            }
-        }*/
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permissionCheck2 == PackageManager.PERMISSION_GRANTED) {
@@ -163,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (!isNetWork()) {
                     Toast.makeText(getApplicationContext(), "네트워크 연결 불량", Toast.LENGTH_LONG).show();
                 } else {
+                    Log.d("ddd","erd");
                     Coordinate coordinate = new Coordinate();
                     editAddr = addrEdit.getText().toString();
                     editAddr = exceptUnderground(editAddr);  // 지하나 산이 있으면 주소를 지하와 산을 뺀 값을 리턴
