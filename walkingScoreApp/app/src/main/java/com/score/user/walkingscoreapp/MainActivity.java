@@ -40,6 +40,7 @@ package com.score.user.walkingscoreapp;
         import com.naver.maps.geometry.LatLng;
         import com.naver.maps.geometry.Utmk;
 
+        //dhidfdf
 public class MainActivity extends AppCompatActivity {
     public final int REQUEST_CODE = 101;
     public final int REQUEST_CODE2 = 103;
