@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.View;
 
 import com.naver.maps.geometry.LatLng;
@@ -20,6 +21,7 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
+import com.naver.maps.map.util.MarkerIcons;
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapOverlay;
@@ -71,9 +73,9 @@ public class DivideActivity extends FragmentActivity implements OnMapReadyCallba
 
         NaverMapOptions options = new NaverMapOptions();
 
-        nearWalkingScore  =(WalkingScore)getIntent().getSerializableExtra("nearWalkingScore"+0);
+        //nearWalkingScore  =(WalkingScore)getIntent().getSerializableExtra("nearWalkingScore"+0);
         //초기 카메라 위치지정은 navermapoptions내부의 camera에 대해서 적용
-        options.camera(new CameraPosition(new LatLng(nearWalkingScore.getLatitude(),nearWalkingScore.getLongitude()),18)).mapType(NaverMap.MapType.Basic);
+        //options.camera(new CameraPosition(new LatLng(nearWalkingScore.getLatitude(),nearWalkingScore.getLongitude()),18)).mapType(NaverMap.MapType.Basic);
 
         //nmapview 대신 mapfragment 사용해서 뷰 띄워주기
        FragmentManager fm = this.getSupportFragmentManager();
@@ -166,7 +168,8 @@ public class DivideActivity extends FragmentActivity implements OnMapReadyCallba
             marker[i]=new Marker();
         }
         marker[0].setPosition(new LatLng(userWalkingScore.getLatitude(),userWalkingScore.getLongitude()));
-        marker[0].setTag("Address: "+userWalkingScore.getAddress()+"latitude: "+userWalkingScore.getLatitude()+"longitude: "+userWalkingScore.getLongitude());
+        marker[0].setTag("Address: "+userWalkingScore.getAddress()+"\nlatitude: "+userWalkingScore.getLatitude() +"longitude: "+userWalkingScore.getLongitude());
+        marker[0].setIcon(MarkerIcons.RED);
         marker[0].setMap(naverMap);
         //마커 클릭리스너 붙이기
         for(int i =0;i<13;i++){
@@ -181,6 +184,7 @@ public class DivideActivity extends FragmentActivity implements OnMapReadyCallba
         }
         for(int i=1;i<=userDecideNumberOfMark;i++){
 
+            nearWalkingScore = (WalkingScore)getIntent().getSerializableExtra("nearWalkingScore"+(i-1));
             nearLatitude = Double.toString(nearWalkingScore.getLatitude());
             nearLongitude =  Double.toString(nearWalkingScore.getLongitude());
             roundWalkingScore = Math.round(nearWalkingScore.getWalkingScore()*100)/100.0;
@@ -190,7 +194,10 @@ public class DivideActivity extends FragmentActivity implements OnMapReadyCallba
             marker[i].setPosition(new LatLng(nearWalkingScore.getLatitude(),nearWalkingScore.getLongitude()));
             marker[i].setTag("WalkingScore: " + nearWalkScore + "\naddress: " + nearWalkingScore.getAddress());
             marker[i].setMap(naverMap);
+            Log.d("marker num"+i,marker[i].getTag().toString());
         }
+
+
 
         //위치 변경 (원래 options 사용해서 변경 가능하나,  xml파일에서 mapfragment받아오기때문에 navermap 호출후 위치 변경필요
 
