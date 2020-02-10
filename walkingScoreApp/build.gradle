@@ -5,6 +5,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven{
+            url 'https://navercorp.vintray.com/maps'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
